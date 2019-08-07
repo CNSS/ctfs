@@ -1,6 +1,4 @@
 # De1CTF 2019 WP
-[TOC]
-
 
 ## Web
 ### SSRFme
@@ -33,7 +31,7 @@ dockerdir_getshell_1.dockerdir_default (172.18.0.2) at 02:42:ac:12:00:02 [ether]
 
 `curl`一下`172.18.0.2`，发现是stage2，搜了一下是 骇极杯 2018 的原题。主要是post传数组和unlink函数的绕过，payload
 
-```
+```sh
 POST / HTTP/1.1
 Host: 172.18.0.2
 Content-Length: 628
@@ -96,7 +94,7 @@ BM算法有现成的轮子，不用自己造了
 给了504个，BM算法得到准确的表达式需要 2n 长度
 爆破后8位即可
 step back 得 initial state
-```python=
+```python
 import hashlib
 
 
@@ -268,7 +266,7 @@ brute force
 
 ### Baby Rsa
 
-```python=
+```python
 from Crypto.Util.number import *
 from gmpy2 import iroot, invert
 
@@ -357,7 +355,7 @@ e = 2 \times 7\\
 2 \times 7 \times d \equiv 1 \bmod q_1q_2 \\
 m^2 \equiv c^{2d} \bmod q_1q_2
 $$
-```python=
+```python
 # -*- coding: utf-8 -*-
 from libnum import *
 import gmpy2
@@ -405,6 +403,7 @@ print (binascii.a2b_hex(res2))
 ```
 运行脚本即可得flag
 
+
 ## Reverse
 
 ### Re_Sign
@@ -416,7 +415,7 @@ print (binascii.a2b_hex(res2))
 
 > base64 的表可由调试得出，输入字符串调试结果与标准base64 结果比较可得表。
 
-```python=
+```python
 import base64
 
 cset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
@@ -455,13 +454,14 @@ print(rawb64)
 print(base64.b64decode(rawb64.encode()))
 ```
 
+
 ### c_plus_plus
 
 输入格式为 `word1@word2#word3`
 程序依次检验三段密码的正确性，并且每段密码的范围为 0 ~ 0x1999，故可爆破。
 
 
-```python=
+```python
 word1 = 78
 
 word2 = 20637
@@ -469,12 +469,22 @@ word2 = 20637
 word3 = 114
 ```
 
+### signalvm_de1ta
+
+[vm2.py](https://github.com/Lavender-Tree/ctfs/blob/master/2019/de1ctf-2019/re/signalvm_de1ta/vm2.py)
+
+[sol.cpp](https://github.com/Lavender-Tree/ctfs/blob/master/2019/de1ctf-2019/re/signalvm_de1ta/sol.cpp)
+
+
 
 ## PWN
+
 ### weapon
+
 构造堆重叠，得到unsorted bin，然后覆盖main_area+88的低位到IO_stdout附近合法size（需要爆破，概率1/16），然后改stdout的flags和io_write_base造成leak，从而malloc_hook,onegadget.
 
-```#coding=utf8
+```python
+#coding=utf8
 
 from pwn import *
 
