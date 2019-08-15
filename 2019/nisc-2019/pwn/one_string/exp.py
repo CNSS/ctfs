@@ -120,4 +120,3 @@ ans += 'cat flag\n'
 ans = base64.b64encode(ans)
 
 print(ans)
-
