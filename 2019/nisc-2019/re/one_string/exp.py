@@ -1,12 +1,3 @@
-# one_string
-
-因为有RWX考虑直接写shellcode，然后发现edit之后的size由strlen决定，因此可以与下一个chunk的size位拼接在一起，造成size比chunk大1字节，然后再次edit改下一个chunk的size位造成堆重叠，之后再将下一个chunk中记录note的content的指针改到bss段notelist去，然后就可以得到任意地址写。将free_hook(0x80EB4F0)写成rwx区域已经布置好的shellcode的地址，然后free即可getshell。
-
-> **Warning**:  libc 2.23（ubuntu16.04）
-
-```python
-#coding=utf8
-
 from pwn import *
 
 import base64
@@ -129,5 +120,3 @@ ans += 'cat flag\n'
 ans = base64.b64encode(ans)
 
 print(ans)
-```
-
